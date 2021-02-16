@@ -72,3 +72,75 @@ def veri_cek():
 
 veri_cek()
 
+
+
+###########################################################################################################################################################
+
+import time
+import login
+from selenium import webdriver
+
+driver_path = "C:\Anaconda3\Lib\chromedriver.exe"
+
+browser = webdriver.Chrome(executable_path=driver_path)
+
+browser.get("https://twitter.com/")
+
+time.sleep(3)
+
+giris_yap = browser.find_element_by_xpath("//*[@id='react-root']/div/div/div/main/div/div/div/div[1]/div/a[2]")
+
+giris_yap.click()
+
+time.sleep(5)
+
+username = browser.find_element_by_xpath("//*[@id='react-root']/div/div/div[2]/main/div/div/div[1]/form/div/div[1]/label/div/div[2]/div/input")
+password = browser.find_element_by_xpath("//*[@id='react-root'']/div/div/div[2]/main/div/div/div[1]/form/div/div[2]/label/div/div[2]/div/input")
+
+time.sleep(3)
+
+
+login = browser.find_element_by_xpath("//*[@id='react-root']/div/div/div[2]/main/div/div/div[1]/form/div/div[3]/div/div")
+
+login.click()
+
+time.sleep(5)
+
+searchArea = browser.find_element_by_xpath("//*[@id='react-root']/div/div/div[2]/main/div/div/div/div/div/div[1]/div[1]/div/div/div/div/div[1]/div[2]/div/div/div/form/div[1]/div/div/div[2]/input")
+searchButton = browser.find_element_by_xpath("//*[@id='global-nav-search']/span/button")
+
+
+
+searchArea.send_keys("#ArtificialIntelligence")
+
+searchArea.click()
+
+time.sleep(5)
+
+lenOfPage = browser.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
+match=False
+while(match==False):
+    lastCount = lenOfPage
+    time.sleep(3)
+    lenOfPage = browser.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
+    if lastCount == lenOfPage:
+        match=True
+time.sleep(5)
+tweets = []
+
+elements = browser.find_elements_by_css_selector(".TweetTextSize.js-tweet-text.tweet-text")
+
+for element in elements:
+    tweets.append(element.text)
+
+tweetCount = 1
+
+with open("ai.txt","w",encoding = "UTF-8") as file:
+    for tweet in tweets:
+        file.write(str(tweetCount) + ".\n" + tweet + "\n")
+        file.write("**************************\n")
+        tweetCount += 1
+
+browser.close()
+
+
