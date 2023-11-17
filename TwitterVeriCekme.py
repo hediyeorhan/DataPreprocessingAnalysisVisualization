@@ -13,13 +13,13 @@ def veri_cek():
     browser = webdriver.Chrome(driver_path)
 
     browser.get("https://www.google.com.tr/")
-    yazı_girişi = browser.find_element_by_css_selector(".gLFyf.gsfi")
-    yazı_girişi.send_keys("tc sağlık bakanlığı twitter")
+    yazi_girisi = browser.find_element_by_css_selector(".gLFyf.gsfi")
+    yazi_girisi.send_keys("tc sağlık bakanlığı twitter")
     time.sleep(2)
-    yazı_girişi.send_keys(Keys.ENTER)
+    yazi_girisi.send_keys(Keys.ENTER)
 
-    tıkla = browser.find_element_by_css_selector(".NsiYH")
-    tıkla.click()
+    tikla = browser.find_element_by_css_selector(".NsiYH")
+    tikla.click()
 
     #
     file = open("tweetler.csv", "w", encoding="utf-8")
@@ -46,8 +46,8 @@ def veri_cek():
             i = i + 1
        
 
-        sayfa_kaynağı = browser.page_source
-        soup = BeautifulSoup(sayfa_kaynağı, "html.parser")
+        sayfa_kaynagi = browser.page_source
+        soup = BeautifulSoup(sayfa_kaynagi, "html.parser")
         tweetler = soup.find_all("div", attrs={"data-testid": "tweet"})
 
         for i in tweetler:
